@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Installation health check
+
+- `fractal-doctor` is now a full installation health check instead of a
+  CUDA-only diagnostic: it reports Python version support (3.11–3.13), the
+  required packages NumPy, Numba, Pillow and mpmath, a real CPU renderer test
+  frame, Tkinter availability, and the optional FFmpeg and CUDA capabilities,
+  each with `OK` / `WARNING` / `ERROR` state.
+- Exit-code contract: `0` whenever the core application is usable — a
+  CPU-only installation without CUDA and FFmpeg now exits `0` and shows the
+  missing capabilities as clearly separated optional warnings; non-zero only
+  for genuine core failures. CUDA details continue to come from `gpu_info.py`.
+- Missing Tkinter is treated as a core failure because the desktop GUI is the
+  primary entry point; the decision is documented in `doctor.py`
+  (`TKINTER_IS_CORE`) and covered by tests.
+- `--json` now emits a stable, machine-readable schema
+  (`schema_version`, `tool`, `exit_code`, `core_ok`, `summary`, `checks[]`).
+
 ### 2.5D surface lighting
 
 - Added compact GUI controls for enabling relief lighting and adjusting strength,
