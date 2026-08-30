@@ -13,6 +13,10 @@
   CPU-only installation without CUDA and FFmpeg now exits `0` and shows the
   missing capabilities as clearly separated optional warnings; non-zero only
   for genuine core failures. CUDA details continue to come from `gpu_info.py`.
+- The FFmpeg check verifies executable health, not just PATH presence: it runs
+  the found binary through `ffmpeg_mp4.probe_ffmpeg()` (`ffmpeg -version`) and
+  reports a stale or broken executable as a warning with the probe error
+  instead of a false `OK`.
 - Missing Tkinter is treated as a core failure because the desktop GUI is the
   primary entry point; the decision is documented in `doctor.py`
   (`TKINTER_IS_CORE`) and covered by tests.

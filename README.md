@@ -278,7 +278,8 @@ fractal-doctor
 Der Doctor prüft die komplette Installation: Python-Version (3.11–3.13), die
 Kernpakete NumPy, Numba, Pillow und mpmath, einen echten CPU-Testframe,
 Tkinter für die Desktop-GUI sowie die optionalen Fähigkeiten FFmpeg
-(MP4-Export) und CUDA. Optionale fehlende Fähigkeiten werden als
+(MP4-Export, geprüft durch einen echten `ffmpeg -version`-Lauf, nicht nur
+PATH-Suche) und CUDA. Optionale fehlende Fähigkeiten werden als
 `WARNUNG` ausgewiesen und beenden den Check mit Exit 0 — eine gesunde
 CPU-only-Installation gilt als korrekt. Exit ungleich 0 gibt es nur bei
 tatsächlichen Kernfehlern. Mit `--json` erscheint dieselbe Auskunft als

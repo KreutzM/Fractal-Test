@@ -77,6 +77,10 @@ class ProbeEnv(Protocol):
     def find_executable(self, name: str) -> str | None:
         raise NotImplementedError
 
+    def probe_ffmpeg(self, executable: str) -> str:
+        """Return the FFmpeg version line or raise if the binary is unusable."""
+        raise NotImplementedError
+
     def inspect_cuda(self) -> CudaStatus:
         raise NotImplementedError
 
@@ -102,6 +106,12 @@ class SystemProbeEnv:
 
     def find_executable(self, name: str) -> str | None:
         return shutil.which(name)
+
+    def probe_ffmpeg(self, executable: str) -> str:
+        from .ffmpeg_mp4 import probe_ffmpeg as probe_ffmpeg_binary
+
+        info = probe_ffmpeg_binary(executable)
+        return info.version_line
 
     def inspect_cuda(self) -> CudaStatus:
         return inspect_cuda()
@@ -245,13 +255,30 @@ def check_ffmpeg(env: ProbeEnv) -> CheckResult:
                 "(PNG-Sequenzen und interaktive App bleiben nutzbar)"
             ),
         )
+    # PATH presence alone is not executable health: a stale, broken or
+    # wrong-arch binary on PATH must not be reported as OK, so the probe
+    # actually runs it via ffmpeg_mp4.probe_ffmpeg() ("ffmpeg -version").
+    try:
+        version_line = env.probe_ffmpeg(executable)
+    except Exception as exc:
+        return CheckResult(
+            key="ffmpeg",
+            label="FFmpeg (MP4-Export)",
+            state=STATE_WARNING,
+            required=False,
+            detail=(
+                f"optional — Executable gefunden ({executable}), aber nicht "
+                f"verwendbar: {exc}; MP4-Export deaktiviert"
+            ),
+            data={"executable": executable, "probe_error": str(exc)},
+        )
     return CheckResult(
         key="ffmpeg",
         label="FFmpeg (MP4-Export)",
         state=STATE_OK,
         required=False,
-        detail=f"gefunden: {executable}",
-        data={"executable": executable},
+        detail=f"gefunden: {executable} — {version_line}",
+        data={"executable": executable, "version_line": version_line},
     )
 
 
@@ -346,8 +373,10 @@ def format_report(report: HealthReport) -> str:
     lines.append("Optionale Fähigkeiten:")
     lines.extend(f"  {markers[c.state]} {c.label}: {c.detail}" for c in optional_checks)
     lines.append("")
-    cuda_check = next(c for c in report.checks if c.key == "cuda")
-    if cuda_check.data:
+    # format_report is public and must tolerate reports without a CUDA check
+    # (or with a CUDA check that carries no data) instead of crashing.
+    cuda_check = next((c for c in report.checks if c.key == "cuda"), None)
+    if cuda_check is not None and cuda_check.data:
         status = CudaStatus(**cuda_check.data)
         lines.append("CUDA-Details:")
         for line in status.report().splitlines():

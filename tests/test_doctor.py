@@ -13,11 +13,13 @@ from fractal_flight_studio.doctor import (
     TKINTER_IS_CORE,
     CheckResult,
     HealthReport,
+    check_package,
     check_python,
     format_report,
     main,
     run_health_check,
 )
+from fractal_flight_studio.ffmpeg_mp4 import FFmpegProbeError
 from fractal_flight_studio.gpu_info import CudaStatus
 
 ALL_PACKAGES = ("numpy", "numba", "pillow", "mpmath")
@@ -43,17 +45,25 @@ class FakeEnv:
         packages: tuple[str, ...] = ALL_PACKAGES,
         tk_ok: bool = True,
         ffmpeg_found: str | None = "/usr/bin/ffmpeg",
+        ffmpeg_probe_ok: bool = True,
         cuda: CudaStatus = CUDA_UNAVAILABLE,
         cpu_ok: bool = True,
+        versionless_packages: tuple[str, ...] = (),
+        broken_imports: tuple[str, ...] = (),
     ) -> None:
         self.python_version = python_version
         self._packages = set(packages)
         self._tk_ok = tk_ok
         self._ffmpeg_found = ffmpeg_found
+        self._ffmpeg_probe_ok = ffmpeg_probe_ok
         self._cuda = cuda
         self._cpu_ok = cpu_ok
+        self._versionless_packages = set(versionless_packages)
+        self._broken_imports = set(broken_imports)
 
     def package_version(self, name: str) -> str | None:
+        if name in self._versionless_packages:
+            return None
         return "1.2.3" if name in self._packages else None
 
     def import_module(self, name: str) -> ModuleType:
@@ -62,12 +72,21 @@ class FakeEnv:
                 raise ImportError("No module named 'tkinter'")
             return cast(ModuleType, SimpleNamespace(__version__=""))
         distribution = {"PIL": "pillow"}.get(name, name)
+        if distribution in self._broken_imports:
+            raise ValueError(f"broken install of {name}")
         if distribution not in self._packages:
             raise ImportError(f"No module named '{name}'")
+        if distribution in self._versionless_packages:
+            return cast(ModuleType, SimpleNamespace())
         return cast(ModuleType, SimpleNamespace(__version__="1.2.3"))
 
     def find_executable(self, name: str) -> str | None:
         return self._ffmpeg_found if name == "ffmpeg" else None
+
+    def probe_ffmpeg(self, executable: str) -> str:
+        if not self._ffmpeg_probe_ok:
+            raise FFmpegProbeError("FFmpeg version probe failed with exit code 1")
+        return "ffmpeg version 7.1-static Copyright (c) 2000-2024"
 
     def inspect_cuda(self) -> CudaStatus:
         return self._cuda
@@ -208,3 +227,74 @@ def test_cuda_details_reuse_gpu_info_report():
     assert "numba-cuda: 0.22" in text  # rendered by gpu_info.CudaStatus.report()
     cuda_data = _check(report, "cuda").data
     assert set(cuda_data) == set(CudaStatus.__dataclass_fields__)
+
+
+# --- review-feedback coverage (PR #9) ------------------------------------
+
+
+def test_broken_ffmpeg_binary_is_warning_not_failure():
+    # A stale/broken executable on PATH must not be reported OK: the probe
+    # actually runs `ffmpeg -version` via ffmpeg_mp4.probe_ffmpeg().
+    report = run_health_check(FakeEnv(ffmpeg_probe_ok=False))
+    ffmpeg = _check(report, "ffmpeg")
+    assert ffmpeg.state == STATE_WARNING
+    assert ffmpeg.required is False
+    assert "nicht verwendbar" in ffmpeg.detail
+    assert ffmpeg.data is not None and ffmpeg.data["probe_error"]
+    assert report.exit_code == CORE_OK
+
+
+def test_working_ffmpeg_reports_version_line():
+    report = run_health_check(FakeEnv())
+    ffmpeg = _check(report, "ffmpeg")
+    assert ffmpeg.state == STATE_OK
+    assert "ffmpeg version 7.1" in ffmpeg.detail
+    assert ffmpeg.data is not None
+    assert ffmpeg.data["version_line"].startswith("ffmpeg version")
+
+
+def test_fully_healthy_installation_reports_no_warnings():
+    # Zero-warning path through format_report (PR review: previously untested).
+    env = FakeEnv(cuda=CUDA_AVAILABLE)
+    report = run_health_check(env)
+    assert report.core_ok is True
+    assert report.has_warnings is False
+    assert report.has_errors is False
+    assert report.exit_code == CORE_OK
+    text = format_report(report)
+    assert "vollständig gesund" in text
+    assert "[WARNUNG]" not in text
+
+
+def test_versionless_package_reports_unknown_version():
+    # Module imports but neither exposes __version__ nor has metadata version.
+    env = FakeEnv(versionless_packages=("mpmath",))
+    result = check_package(env, "mpmath", "mpmath", "mpmath")
+    assert result.state == STATE_OK  # version is informational, not required
+    assert "( Versionsnummer unbekannt )" in result.detail
+    assert result.data is not None and result.data["version"] is None
+
+
+def test_non_import_error_package_failure_is_core_error():
+    # A broken module raising something other than ImportError must still be
+    # reported as a core failure (defensive except in check_package).
+    env = FakeEnv(broken_imports=("numpy",))
+    result = check_package(env, "numpy", "numpy", "NumPy")
+    assert result.state == STATE_ERROR
+    assert result.required is True
+    assert "broken install of numpy" in result.detail
+
+
+def test_format_report_tolerates_report_without_cuda_check():
+    # format_report is public; a hand-built report without a CUDA check must
+    # not crash with StopIteration (PR review MAJOR #2).
+    core = CheckResult(
+        key="python",
+        label="Python-Version",
+        state=STATE_OK,
+        required=True,
+        detail="Python 3.12.4",
+    )
+    text = format_report(HealthReport(checks=(core,), exit_code=CORE_OK))
+    assert "CUDA-Details:" not in text
+    assert "vollständig gesund" in text
