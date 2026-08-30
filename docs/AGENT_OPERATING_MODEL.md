@@ -12,6 +12,8 @@ GitHub issue
     -> current main
     -> agent/<issue>-<short-description>
     -> implementation and relevant validation
+       -> optional scoped leaf subagents
+       -> parent verification/integration
     -> focused commits and pushed branch
     -> draft or review-ready pull request
     -> review and authorized merge
@@ -39,6 +41,18 @@ Follow the issue contract, `AGENTS.md`, and the architectural boundaries. Small
 necessary fixes may remain in the same change. Record independently useful or
 out-of-scope work as a linked follow-up issue rather than silently enlarging the
 pull request.
+
+Hermes may use leaf subagents for genuinely separable reasoning-heavy work such
+as independent review, architecture analysis, test-gap discovery, investigations,
+or isolated implementation leaves. The parent remains responsible for the issue,
+main feature branch, final integration, validation, commits, push, PR, and
+handoff. Child summaries are inputs to verify, not authoritative project state.
+
+Read-only children may share the parent workspace. Parallel code-writing children
+must use isolated worktrees when that runtime feature is available; otherwise
+keep implementation sequential or delegate analysis-only work. Review child diffs
+and test evidence before merging or cherry-picking them into the parent branch.
+Routine development stays flat: parent -> leaf children.
 
 ### 4. Validate and commit
 
@@ -68,6 +82,24 @@ Start a fresh chat with only:
 > Work on issue #N. Treat repository and GitHub state as source of truth. Read
 > AGENTS.md, .hermes.md, relevant docs, the issue, existing branch/PR/comments,
 > then continue from the current repository state.
+
+## Recommended Hermes delegation runtime
+
+For local Git development in this repository, the recommended user-level Hermes
+configuration is:
+
+```yaml
+delegation:
+  max_concurrent_children: 3
+  worktree_isolation: true
+  max_spawn_depth: 1
+```
+
+This belongs in `~/.hermes/config.yaml`, not in the repository policy file.
+Worktree isolation prevents concurrent coding children from clobbering the same
+checkout. The flat depth keeps ordinary development understandable and avoids
+unnecessary agent trees. If isolation is unavailable, the repo policy requires
+sequential code integration or analysis-only delegation instead.
 
 ## Model selection
 
