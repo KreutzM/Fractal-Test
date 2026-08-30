@@ -14,9 +14,15 @@ GitHub issue
     -> implementation and relevant validation
        -> optional scoped leaf subagents
        -> parent verification/integration
-    -> focused commits and pushed branch
-    -> draft or review-ready pull request
-    -> review and authorized merge
+    -> committed review target + pushed branch
+    -> draft pull request
+    -> fresh independent reviewer leaf
+       -> parent evaluates/fixes valid findings
+       -> fresh re-review until clean verdict
+    -> final CI/status gate
+       -> fix + re-review again if the code changes
+    -> review-ready pull request
+    -> explicit user-authorized merge
     -> durable issue/PR handoff
 ```
 
@@ -61,17 +67,60 @@ local tests, CI, simulator, physical hardware, and manual checks distinct. Inspe
 the complete diff and `git status`, run `git diff --check`, and create focused
 commits that reference the issue where practical.
 
-### 5. Publish and review
+For a substantive product-code change, commit the exact state that will be sent
+to an independent reviewer before dispatching the reviewer. This is especially
+important with Hermes child worktree isolation because each child worktree is
+branched from the parent's current `HEAD`.
 
-Push the branch normally and open or update the linked pull request. Use a draft
-while work is incomplete and a review-ready pull request when implementation and
-meaningful local validation are complete. Follow the required PR structure in
-`.hermes.md`. Review may request further commits on the same branch.
+### 5. Publish and autonomously review
+
+Push the branch normally and open or update the linked pull request. Keep it
+draft while implementation or autonomous review is incomplete. Follow the
+required PR structure in `.hermes.md`.
+
+A substantive product-code PR must then pass an autonomous review-convergence
+loop inside the same parent Hermes session:
+
+1. dispatch a fresh independent reviewer leaf with the issue contract, relevant
+   repository constraints, current commit/PR, actual diff and validation target;
+2. reviewer work is read-only by default and covers spec compliance, correctness,
+   regressions, architecture/invariants, test gaps, edge cases, relevant platform
+   concerns, and misleading claims;
+3. the parent evaluates every finding independently, fixes valid in-scope
+   BLOCKER/MAJOR and actionable MINOR findings on the primary feature branch,
+   validates, commits, and pushes;
+4. dispatch a fresh reviewer after each fix round rather than asking the prior
+   reviewer context to confirm itself;
+5. repeat until a fresh reviewer reports no unresolved actionable findings and a
+   merge-ready verdict from the review perspective.
+
+This loop is intended to replace manual user orchestration between separate
+implementer and reviewer sessions. The parent owns the issue lifecycle and moves
+between implementation, review and repair itself.
+
+Use at most three review/fix rounds without convergence. If a genuine blocker or
+semantic disagreement remains after that, keep the PR not-ready, record the exact
+unresolved point in GitHub, and escalate only that decision to the user.
+
+### 6. Final CI gate and handoff
+
+Check final GitHub CI/status before declaring the PR review-ready. Passing CI is
+required evidence but does not replace independent review. If a change-driven CI
+failure requires another code modification, validate, commit and push the fix,
+then independently review the new delta again before handoff.
+
+Physical CUDA or manual checks remain distinct. When `AGENTS.md` permits them to
+be unavailable, record them explicitly as pending rather than blocking unrelated
+CPU/CI evidence.
+
+Once the independent review has converged and final CI is acceptable, mark the PR
+review-ready and update its handoff with the current commit, decisions, actual
+checks and any permitted pending hardware/manual validation.
 
 Merge into `main` only after explicit user authorization. Passing checks or an
 approval does not itself grant Hermes merge permission.
 
-### 6. Handoff
+### 7. Handoff
 
 Before stopping, ensure the branch is pushed and the issue/PR records the current
 commit, decisions, actual checks, remaining work, and next action. This durable
@@ -103,7 +152,9 @@ sequential code integration or analysis-only delegation instead.
 
 ## Model selection
 
-The workflow is model-independent and model selection happens at invocation time.
-If a team chooses multiple models, it may use fast implementer candidates and an
-independent reviewer with a different model family, but current model preferences
-are operational choices rather than durable repository architecture.
+The workflow is model-independent and model selection happens at invocation time
+or in user-level Hermes configuration. A team may configure
+`delegation.provider` / `delegation.model` so fresh reviewer children use a
+different model family from the parent. This is a useful implementation/reviewer
+separation, but concrete model identifiers remain an operational choice rather
+than durable repository architecture.
