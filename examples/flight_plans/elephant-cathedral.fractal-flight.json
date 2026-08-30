@@ -1,0 +1,280 @@
+{
+  "format": "fractal-flight-studio.flight-plan",
+  "schema_version": 2,
+  "name": "Elephant Cathedral – Fluss der Rüssel",
+  "digits": 96,
+  "scene": {
+    "fractal": "mandelbrot",
+    "exponent": 2,
+    "julia_c_real": "-0.8",
+    "julia_c_imag": "0.156"
+  },
+  "camera_keyframes": [
+    {
+      "time_seconds": "0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smoothstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "8",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "26",
+      "center_x": "-0.08",
+      "center_y": "0.01",
+      "view_width": "1.6",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "44",
+      "center_x": "0.18",
+      "center_y": "0.012",
+      "view_width": "0.55",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "60",
+      "center_x": "0.265",
+      "center_y": "0.0125",
+      "view_width": "0.12",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "68",
+      "center_x": "0.265",
+      "center_y": "0.0125",
+      "view_width": "0.12",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "86",
+      "center_x": "0.2894",
+      "center_y": "0.01258",
+      "view_width": "0.018",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "102",
+      "center_x": "0.2894",
+      "center_y": "0.01258",
+      "view_width": "0.0038",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "110",
+      "center_x": "0.2894",
+      "center_y": "0.01258",
+      "view_width": "0.0038",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "128",
+      "center_x": "0.2894",
+      "center_y": "0.01258",
+      "view_width": "0.00119047619047619",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "140",
+      "center_x": "0.2894",
+      "center_y": "0.01258",
+      "view_width": "0.00014880952380952375",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "151",
+      "center_x": "0.289355357142857142875",
+      "center_y": "0.0126052976190476190375",
+      "view_width": "0.00001860119047619046875",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "162",
+      "center_x": "0.289360937500000000015625",
+      "center_y": "0.0126052976190476190375",
+      "view_width": "0.00000232514880952380859375",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "173",
+      "center_x": "0.289360239955357142873046875",
+      "center_y": "0.0126052976190476190375",
+      "view_width": "0.00000029064360119047607421875",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "184",
+      "center_x": "0.289360239955357142873046875",
+      "center_y": "0.0126053470284598214184326171875",
+      "view_width": "3.633045014880950927734375e-8",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "194",
+      "center_x": "0.289360239955357142873046875",
+      "center_y": "0.0126053470284598214184326171875",
+      "view_width": "4.54130626860118865966796875e-9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "203",
+      "center_x": "0.289360239955357142873046875",
+      "center_y": "0.0126053470284598214184326171875",
+      "view_width": "5.6766328357514858245849609375e-10",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "207",
+      "center_x": "0.289360239955357142873046875",
+      "center_y": "0.0126053470284598214184326171875",
+      "view_width": "7.095791044689357280731201171875e-11",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "210",
+      "center_x": "0.289360239955357142873046875",
+      "center_y": "0.0126053470284598214184326171875",
+      "view_width": "7.095791044689357280731201171875e-11",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    }
+  ],
+  "render_cues": [
+    {
+      "time_seconds": "0",
+      "max_iterations": 320,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "0.65",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "26",
+      "max_iterations": 420,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "0.9",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "60",
+      "max_iterations": 620,
+      "reference_bits": 256,
+      "palette": "ocean",
+      "cycles": "1.15",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "68",
+      "max_iterations": 620,
+      "reference_bits": 256,
+      "palette": "ocean",
+      "cycles": "1.15",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "86",
+      "max_iterations": 850,
+      "reference_bits": 256,
+      "palette": "electric",
+      "cycles": "1.45",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "110",
+      "max_iterations": 1000,
+      "reference_bits": 320,
+      "palette": "electric",
+      "cycles": "1.7",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "128",
+      "max_iterations": 1300,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "2.0",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "151",
+      "max_iterations": 1600,
+      "reference_bits": 448,
+      "palette": "ocean",
+      "cycles": "2.25",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "162",
+      "max_iterations": 1900,
+      "reference_bits": 512,
+      "palette": "ocean",
+      "cycles": "2.5",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "173",
+      "max_iterations": 2200,
+      "reference_bits": 576,
+      "palette": "electric",
+      "cycles": "2.8",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "184",
+      "max_iterations": 2500,
+      "reference_bits": 640,
+      "palette": "electric",
+      "cycles": "3.1",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "194",
+      "max_iterations": 2900,
+      "reference_bits": 704,
+      "palette": "monochrome",
+      "cycles": "3.4",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "203",
+      "max_iterations": 3300,
+      "reference_bits": 768,
+      "palette": "electric",
+      "cycles": "3.7",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "207",
+      "max_iterations": 3600,
+      "reference_bits": 832,
+      "palette": "electric",
+      "cycles": "4.0",
+      "palette_transition": "blend"
+    }
+  ]
+}

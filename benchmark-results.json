@@ -1,0 +1,92 @@
+{
+  "system": "Linux-6.12.13-x86_64-with-glibc2.41",
+  "python": "3.13.5",
+  "available_backends": [
+    "cpu-numba"
+  ],
+  "repeats": 3,
+  "measurement": "render_frame: fractal + colorization + required host readback; excludes Tk display",
+  "results": [
+    {
+      "scenario": "mandelbrot-overview-1080p",
+      "fractal": "mandelbrot",
+      "size": [
+        1920,
+        1080
+      ],
+      "pixels": 2073600,
+      "iterations": 400,
+      "view_width": 3.5,
+      "backend": "cpu-numba",
+      "precision": "float32",
+      "first_frame_seconds": 0.29301953699996375,
+      "first_wall_seconds": 0.29339575499989223,
+      "steady_frame_seconds_median": 0.276993358000027,
+      "steady_wall_seconds_median": 0.27734645600003205,
+      "steady_frame_fps": 3.610194869726452,
+      "steady_mpix_per_second": 7.4861000818647705,
+      "details": {
+        "precision": "float32",
+        "true_precision_kernel": true,
+        "compute_seconds": 0.2210024369999246,
+        "color_seconds": 0.05571974500003307,
+        "transfer_seconds": 0.0,
+        "optimized_frame_path": false
+      }
+    },
+    {
+      "scenario": "mandelbrot-boundary-1080p",
+      "fractal": "mandelbrot",
+      "size": [
+        1920,
+        1080
+      ],
+      "pixels": 2073600,
+      "iterations": 1000,
+      "view_width": 0.003,
+      "backend": "cpu-numba",
+      "precision": "float32",
+      "first_frame_seconds": 0.18284232900009556,
+      "first_wall_seconds": 0.18287198299992724,
+      "steady_frame_seconds_median": 0.17326552600002287,
+      "steady_wall_seconds_median": 0.17329743200002667,
+      "steady_frame_fps": 5.771488553354047,
+      "steady_mpix_per_second": 11.967758664234951,
+      "details": {
+        "precision": "float32",
+        "true_precision_kernel": true,
+        "compute_seconds": 0.12686458199993922,
+        "color_seconds": 0.0459100909999961,
+        "transfer_seconds": 0.0,
+        "optimized_frame_path": false
+      }
+    },
+    {
+      "scenario": "julia-720p",
+      "fractal": "julia",
+      "size": [
+        1280,
+        720
+      ],
+      "pixels": 921600,
+      "iterations": 600,
+      "view_width": 3.5,
+      "backend": "cpu-numba",
+      "precision": "float32",
+      "first_frame_seconds": 0.06470057499996074,
+      "first_wall_seconds": 0.06472929799997473,
+      "steady_frame_seconds_median": 0.06724568100003125,
+      "steady_wall_seconds_median": 0.06728648199998588,
+      "steady_frame_fps": 14.870843526732003,
+      "steady_mpix_per_second": 13.704969394236214,
+      "details": {
+        "precision": "float32",
+        "true_precision_kernel": true,
+        "compute_seconds": 0.04418821900003422,
+        "color_seconds": 0.01921192500003599,
+        "transfer_seconds": 0.0,
+        "optimized_frame_path": false
+      }
+    }
+  ]
+}

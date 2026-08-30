@@ -1,0 +1,76 @@
+name: Repository snapshot
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: snapshot-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  snapshot:
+    name: Source ZIP and Git bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create repository snapshot
+        id: snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          short_sha="${GITHUB_SHA::12}"
+          base_name="fractal-flight-studio-${short_sha}"
+          source_zip="${base_name}-source.zip"
+          bundle="${base_name}.bundle"
+          metadata="${base_name}.txt"
+          checksums="${base_name}.sha256"
+
+          # Archive exactly the tree tested by this workflow. On pull requests,
+          # GITHUB_SHA is GitHub's synthetic merge commit.
+          git archive --format=zip --output="${source_zip}" HEAD
+
+          # Attach detached PR merge commits to a real branch before creating the
+          # bundle, so cloning the bundle always restores the tested commit.
+          git switch --force-create snapshot HEAD
+          git bundle create "${bundle}" --all
+          git bundle verify "${bundle}"
+
+          {
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "event=${GITHUB_EVENT_NAME}"
+            echo "tested_sha=${GITHUB_SHA}"
+            echo "source_ref=${GITHUB_REF}"
+            echo "source_branch=${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+            echo "base_branch=${GITHUB_BASE_REF:-}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+          } > "${metadata}"
+
+          sha256sum "${source_zip}" "${bundle}" "${metadata}" > "${checksums}"
+
+          echo "artifact_name=repository-snapshot-${short_sha}" >> "${GITHUB_OUTPUT}"
+
+      - name: Upload repository snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.snapshot.outputs.artifact_name }}
+          path: |
+            fractal-flight-studio-*-source.zip
+            fractal-flight-studio-*.bundle
+            fractal-flight-studio-*.txt
+            fractal-flight-studio-*.sha256
+          retention-days: 14
+          compression-level: 0
+          if-no-files-found: error

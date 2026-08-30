@@ -1,0 +1,224 @@
+{
+  "format": "fractal-flight-studio.flight-plan",
+  "schema_version": 2,
+  "name": "Diamond Crossfire – Sternbucht und Blitzkanäle",
+  "digits": 80,
+  "scene": {
+    "fractal": "mandelbrot",
+    "exponent": 2,
+    "julia_c_real": "-0.8",
+    "julia_c_imag": "0.156"
+  },
+  "camera_keyframes": [
+    {
+      "time_seconds": "0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smoothstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "2.0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "7.393107821671174737039550736419607472393903507479973827547793874425747278448733",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "0.2",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "10.393107821671174737039550736419607472393903507479973827547793874425747278448733",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "0.2",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "12.893107821671174737039550736419607472393903507479973827547793874425747278448733",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "0.2",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "16.329646876701283661698328526468709990969418615231194592656909323090140663722422",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "1.2821565000000000165543",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "18.274124156196053564348286125478678523054905638257392793892955412361289379083111",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "1.2821565000000000165543",
+      "easing": "smootherstep",
+      "center_interpolation": "linear"
+    },
+    {
+      "time_seconds": "28.870871545484053549645148829345155763724208020653365278735225130913126124543464",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.00416666666666667",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "32.370871545484053549645148829345155763724208020653365278735225130913126124543464",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.00416666666666667",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "35.370871545484053549645148829345155763724208020653365278735225130913126124543464",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.00416666666666667",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "47.370871545484053549645148829345155763724208020653365278735225130913126124543464",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "49.131227101039609127205148829345155763724208020653365278735225130913126124543464",
+      "center_x": "-0.5",
+      "center_y": "0.0",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "linear"
+    },
+    {
+      "time_seconds": "50.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "center_x": "0.370624233423",
+      "center_y": "-0.670428331878",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "linear"
+    },
+    {
+      "time_seconds": "62.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "center_x": "0.370624233423",
+      "center_y": "-0.670428331878",
+      "view_width": "0.001",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "66.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "center_x": "0.370624233423",
+      "center_y": "-0.670428331878",
+      "view_width": "0.001",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "68.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "center_x": "0.370624233423",
+      "center_y": "-0.670428331878",
+      "view_width": "0.001",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "80.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "center_x": "0.370624233423",
+      "center_y": "-0.670428331878",
+      "view_width": "1e-10",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "86.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "center_x": "0.370624233423",
+      "center_y": "-0.670428331878",
+      "view_width": "1e-10",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    }
+  ],
+  "render_cues": [
+    {
+      "time_seconds": "0.0",
+      "max_iterations": 320,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "0.8",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "7.393107821671174737039550736419607472393903507479973827547793874425747278448733",
+      "max_iterations": 400,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "1.1",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "10.393107821671174737039550736419607472393903507479973827547793874425747278448733",
+      "max_iterations": 400,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "1.1",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "28.870871545484053549645148829345155763724208020653365278735225130913126124543464",
+      "max_iterations": 750,
+      "reference_bits": 256,
+      "palette": "inferno",
+      "cycles": "1.7",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "32.370871545484053549645148829345155763724208020653365278735225130913126124543464",
+      "max_iterations": 750,
+      "reference_bits": 256,
+      "palette": "inferno",
+      "cycles": "1.7",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "62.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "max_iterations": 1500,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "2.1",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "66.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "max_iterations": 1500,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "2.1",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "80.266343853425640887425854265916584335152779449224793850163796559484554695972035",
+      "max_iterations": 2200,
+      "reference_bits": 512,
+      "palette": "electric",
+      "cycles": "3.2",
+      "palette_transition": "blend"
+    }
+  ]
+}

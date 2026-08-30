@@ -1,0 +1,392 @@
+{
+  "format": "fractal-flight-studio.flight-plan",
+  "schema_version": 2,
+  "name": "Northern Storm Voyage – Sternbucht zum Blitzkern",
+  "digits": 96,
+  "scene": {
+    "fractal": "mandelbrot",
+    "exponent": 2,
+    "julia_c_real": "-0.8",
+    "julia_c_imag": "0.156"
+  },
+  "camera_keyframes": [
+    {
+      "time_seconds": "0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smoothstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "10",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "30",
+      "center_x": "-0.50",
+      "center_y": "0.30",
+      "view_width": "1.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "50",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "0.45",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "68",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "0.2",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "78",
+      "center_x": "-0.5024",
+      "center_y": "0.5629",
+      "view_width": "0.2",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "96",
+      "center_x": "-0.5022",
+      "center_y": "0.5631",
+      "view_width": "0.025",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "110",
+      "center_x": "-0.50235",
+      "center_y": "0.56295",
+      "view_width": "0.0025",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "120",
+      "center_x": "-0.50235",
+      "center_y": "0.56295",
+      "view_width": "0.0025",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "140",
+      "center_x": "-0.50235",
+      "center_y": "0.56295",
+      "view_width": "0.9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "158",
+      "center_x": "-0.25",
+      "center_y": "0.86",
+      "view_width": "0.9",
+      "easing": "smootherstep",
+      "center_interpolation": "linear"
+    },
+    {
+      "time_seconds": "176",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.9",
+      "easing": "smootherstep",
+      "center_interpolation": "linear"
+    },
+    {
+      "time_seconds": "194",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.12",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "208",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.018",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "218",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.018",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "234",
+      "center_x": "-0.15252",
+      "center_y": "1.03971",
+      "view_width": "0.00416666666666667",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "244",
+      "center_x": "-0.15252",
+      "center_y": "1.0390016666666666661",
+      "view_width": "0.00052083333333333375",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "253",
+      "center_x": "-0.15252",
+      "center_y": "1.0389131249999999993625",
+      "view_width": "0.00006510416666666671875",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "261",
+      "center_x": "-0.15252",
+      "center_y": "1.0389131249999999993625",
+      "view_width": "0.00000813802083333333984375",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "269",
+      "center_x": "-0.152517558593749999998046875",
+      "center_y": "1.0389131249999999993625",
+      "view_width": "0.00000101725260416666748046875",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "277",
+      "center_x": "-0.152517558593749999998046875",
+      "center_y": "1.0389131249999999993625",
+      "view_width": "0.00000012715657552083343505859375",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "284",
+      "center_x": "-0.152517558593749999998046875",
+      "center_y": "1.0389131033833821608208160400390625",
+      "view_width": "1.589457194010417938232421875e-8",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "289",
+      "center_x": "-0.152517553825378417966793060302734375",
+      "center_y": "1.0389131006813049310031055450439453125",
+      "view_width": "1.98682149251302242279052734375e-9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "293",
+      "center_x": "-0.152517553229331970212886333465576171875",
+      "center_y": "1.0389131006813049310031055450439453125",
+      "view_width": "2.4835268656412780284881591796875e-10",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "296",
+      "center_x": "-0.152517553303837776182124674320220947265625",
+      "center_y": "1.0389131006390849742872038185596466064453125",
+      "view_width": "3.104408582051597535610198974609375e-11",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "298",
+      "center_x": "-0.152517553293360397217700532637536525726318359375",
+      "center_y": "1.0389131006397446611108897830359637737274169921875",
+      "view_width": "1e-12",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    }
+  ],
+  "render_cues": [
+    {
+      "time_seconds": "0",
+      "max_iterations": 300,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "0.6",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "30",
+      "max_iterations": 380,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "0.8",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "50",
+      "max_iterations": 480,
+      "reference_bits": 192,
+      "palette": "ocean",
+      "cycles": "1.0",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "78",
+      "max_iterations": 550,
+      "reference_bits": 256,
+      "palette": "ocean",
+      "cycles": "1.15",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "96",
+      "max_iterations": 800,
+      "reference_bits": 320,
+      "palette": "electric",
+      "cycles": "1.45",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "110",
+      "max_iterations": 1100,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "1.8",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "120",
+      "max_iterations": 1100,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "1.8",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "140",
+      "max_iterations": 650,
+      "reference_bits": 256,
+      "palette": "monochrome",
+      "cycles": "1.0",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "176",
+      "max_iterations": 650,
+      "reference_bits": 256,
+      "palette": "monochrome",
+      "cycles": "1.0",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "194",
+      "max_iterations": 850,
+      "reference_bits": 320,
+      "palette": "inferno",
+      "cycles": "1.35",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "218",
+      "max_iterations": 1000,
+      "reference_bits": 384,
+      "palette": "inferno",
+      "cycles": "1.65",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "234",
+      "max_iterations": 1400,
+      "reference_bits": 448,
+      "palette": "inferno",
+      "cycles": "2.0",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "244",
+      "max_iterations": 1800,
+      "reference_bits": 512,
+      "palette": "electric",
+      "cycles": "2.35",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "253",
+      "max_iterations": 2100,
+      "reference_bits": 576,
+      "palette": "electric",
+      "cycles": "2.6",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "261",
+      "max_iterations": 2400,
+      "reference_bits": 640,
+      "palette": "electric",
+      "cycles": "2.85",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "269",
+      "max_iterations": 2700,
+      "reference_bits": 704,
+      "palette": "ocean",
+      "cycles": "3.1",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "277",
+      "max_iterations": 3000,
+      "reference_bits": 768,
+      "palette": "ocean",
+      "cycles": "3.35",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "284",
+      "max_iterations": 3300,
+      "reference_bits": 832,
+      "palette": "electric",
+      "cycles": "3.6",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "289",
+      "max_iterations": 3600,
+      "reference_bits": 896,
+      "palette": "electric",
+      "cycles": "3.8",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "293",
+      "max_iterations": 3900,
+      "reference_bits": 960,
+      "palette": "monochrome",
+      "cycles": "4.0",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "296",
+      "max_iterations": 4200,
+      "reference_bits": 1024,
+      "palette": "electric",
+      "cycles": "4.2",
+      "palette_transition": "blend"
+    }
+  ]
+}

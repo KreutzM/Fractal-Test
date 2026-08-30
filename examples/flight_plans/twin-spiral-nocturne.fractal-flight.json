@@ -1,0 +1,328 @@
+{
+  "format": "fractal-flight-studio.flight-plan",
+  "schema_version": 2,
+  "name": "Twin Spiral Nocturne – Zwei Täler, ein Abstieg",
+  "digits": 96,
+  "scene": {
+    "fractal": "mandelbrot",
+    "exponent": 2,
+    "julia_c_real": "-0.8",
+    "julia_c_imag": "0.156"
+  },
+  "camera_keyframes": [
+    {
+      "time_seconds": "0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smoothstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "8",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "26",
+      "center_x": "-0.68",
+      "center_y": "0.08",
+      "view_width": "1.2",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "44",
+      "center_x": "-0.735",
+      "center_y": "0.108",
+      "view_width": "0.22",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "60",
+      "center_x": "-0.7453",
+      "center_y": "0.113",
+      "view_width": "0.032",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "68",
+      "center_x": "-0.7453",
+      "center_y": "0.113",
+      "view_width": "0.032",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "86",
+      "center_x": "-0.7453",
+      "center_y": "0.113",
+      "view_width": "0.003",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "102",
+      "center_x": "-0.7453",
+      "center_y": "0.113",
+      "view_width": "0.000166666666666667",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "110",
+      "center_x": "-0.7453",
+      "center_y": "0.113",
+      "view_width": "0.000166666666666667",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "126",
+      "center_x": "-0.7452994",
+      "center_y": "0.1130003",
+      "view_width": "2e-6",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "138",
+      "center_x": "-0.7452994",
+      "center_y": "0.1130003",
+      "view_width": "2e-6",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "154",
+      "center_x": "-0.7452994",
+      "center_y": "0.1130003",
+      "view_width": "0.045",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "170",
+      "center_x": "-0.748176",
+      "center_y": "0.099351",
+      "view_width": "0.045",
+      "easing": "smootherstep",
+      "center_interpolation": "linear"
+    },
+    {
+      "time_seconds": "186",
+      "center_x": "-0.748176",
+      "center_y": "0.099351",
+      "view_width": "0.004",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "196",
+      "center_x": "-0.748176",
+      "center_y": "0.099351",
+      "view_width": "0.004",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "212",
+      "center_x": "-0.748176",
+      "center_y": "0.099351",
+      "view_width": "0.000277777777777778",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "223",
+      "center_x": "-0.748176",
+      "center_y": "0.099351",
+      "view_width": "0.00003472222222222225",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "234",
+      "center_x": "-0.748176",
+      "center_y": "0.0993450972222222222175",
+      "view_width": "0.00000434027777777778125",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "245",
+      "center_x": "-0.748176",
+      "center_y": "0.0993450972222222222175",
+      "view_width": "0.00000054253472222222265625",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "252",
+      "center_x": "-0.748176",
+      "center_y": "0.0993450972222222222175",
+      "view_width": "6.781684027777783203125e-8",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "256",
+      "center_x": "-0.748176",
+      "center_y": "0.0993450972222222222175",
+      "view_width": "8.47710503472222900390625e-9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "260",
+      "center_x": "-0.748176",
+      "center_y": "0.0993450972222222222175",
+      "view_width": "8.47710503472222900390625e-9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    }
+  ],
+  "render_cues": [
+    {
+      "time_seconds": "0",
+      "max_iterations": 320,
+      "reference_bits": 192,
+      "palette": "ember",
+      "cycles": "0.7",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "26",
+      "max_iterations": 430,
+      "reference_bits": 192,
+      "palette": "ember",
+      "cycles": "0.9",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "60",
+      "max_iterations": 700,
+      "reference_bits": 256,
+      "palette": "inferno",
+      "cycles": "1.2",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "68",
+      "max_iterations": 700,
+      "reference_bits": 256,
+      "palette": "inferno",
+      "cycles": "1.2",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "86",
+      "max_iterations": 950,
+      "reference_bits": 320,
+      "palette": "inferno",
+      "cycles": "1.55",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "102",
+      "max_iterations": 1300,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "1.9",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "110",
+      "max_iterations": 1300,
+      "reference_bits": 384,
+      "palette": "electric",
+      "cycles": "1.9",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "126",
+      "max_iterations": 1700,
+      "reference_bits": 512,
+      "palette": "electric",
+      "cycles": "2.25",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "154",
+      "max_iterations": 1000,
+      "reference_bits": 384,
+      "palette": "ocean",
+      "cycles": "1.5",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "170",
+      "max_iterations": 1000,
+      "reference_bits": 384,
+      "palette": "ocean",
+      "cycles": "1.5",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "186",
+      "max_iterations": 1300,
+      "reference_bits": 384,
+      "palette": "inferno",
+      "cycles": "1.85",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "212",
+      "max_iterations": 1800,
+      "reference_bits": 512,
+      "palette": "inferno",
+      "cycles": "2.3",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "223",
+      "max_iterations": 2100,
+      "reference_bits": 576,
+      "palette": "electric",
+      "cycles": "2.65",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "234",
+      "max_iterations": 2400,
+      "reference_bits": 640,
+      "palette": "electric",
+      "cycles": "2.9",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "245",
+      "max_iterations": 2800,
+      "reference_bits": 704,
+      "palette": "electric",
+      "cycles": "3.2",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "252",
+      "max_iterations": 3200,
+      "reference_bits": 768,
+      "palette": "monochrome",
+      "cycles": "3.5",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "256",
+      "max_iterations": 3500,
+      "reference_bits": 832,
+      "palette": "electric",
+      "cycles": "3.8",
+      "palette_transition": "blend"
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "format": "fractal-flight-studio.flight-plan",
+  "schema_version": 2,
+  "name": "Ember Island – Mini-Mandelbrot-Grenzflug",
+  "digits": 80,
+  "scene": {
+    "fractal": "mandelbrot",
+    "exponent": 2,
+    "julia_c_real": "-0.8",
+    "julia_c_imag": "0.156"
+  },
+  "camera_keyframes": [
+    {
+      "time_seconds": "0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smoothstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "2.0",
+      "center_x": "-0.5",
+      "center_y": "0",
+      "view_width": "3.5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "9.4418312877068317989520617643725784107316530923273102663933391226951159001018505",
+      "center_x": "-1.76867746054",
+      "center_y": "0.00423684791873",
+      "view_width": "0.08",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "12.441831287706831798952061764372578410731653092327310266393339122695115900101851",
+      "center_x": "-1.76867746054",
+      "center_y": "0.00423684791873",
+      "view_width": "0.08",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "14.441831287706831798952061764372578410731653092327310266393339122695115900101851",
+      "center_x": "-1.76867746054",
+      "center_y": "0.00423684791873",
+      "view_width": "0.08",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "21.108497954373498465618728431039245077398319758993976933060005789361782566768518",
+      "center_x": "-1.76867746054",
+      "center_y": "0.00423684791873",
+      "view_width": "0.0025",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "24.108497954373498465618728431039245077398319758993976933060005789361782566768518",
+      "center_x": "-1.76867746054",
+      "center_y": "0.00423684791873",
+      "view_width": "0.0025",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "26.608497954373498465618728431039245077398319758993976933060005789361782566768518",
+      "center_x": "-1.76867746054",
+      "center_y": "0.00423684791873",
+      "view_width": "0.0025",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "38.063688801126397137300614942800593032390672785485285038843712994150399691526679",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "41.563688801126397137300614942800593032390672785485285038843712994150399691526679",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "43.563688801126397137300614942800593032390672785485285038843712994150399691526679",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-5",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "53.334065550795109925154495617769387667287235706145816250769467099491384328610871",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-7",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "56.334065550795109925154495617769387667287235706145816250769467099491384328610871",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-7",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "58.334065550795109925154495617769387667287235706145816250769467099491384328610871",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-7",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "69.049962631076923950542622809670646299109272457838011773526745795671819091864501",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    },
+    {
+      "time_seconds": "75.049962631076923950542622809670646299109272457838011773526745795671819091864501",
+      "center_x": "-1.767894257415",
+      "center_y": "0.00435598854373",
+      "view_width": "1e-9",
+      "easing": "smootherstep",
+      "center_interpolation": "focus"
+    }
+  ],
+  "render_cues": [
+    {
+      "time_seconds": "0.0",
+      "max_iterations": 340,
+      "reference_bits": 192,
+      "palette": "ember",
+      "cycles": "0.75",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "9.4418312877068317989520617643725784107316530923273102663933391226951159001018505",
+      "max_iterations": 500,
+      "reference_bits": 192,
+      "palette": "ember",
+      "cycles": "1.0",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "12.441831287706831798952061764372578410731653092327310266393339122695115900101851",
+      "max_iterations": 500,
+      "reference_bits": 192,
+      "palette": "ember",
+      "cycles": "1.0",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "21.108497954373498465618728431039245077398319758993976933060005789361782566768518",
+      "max_iterations": 700,
+      "reference_bits": 256,
+      "palette": "electric",
+      "cycles": "1.35",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "24.108497954373498465618728431039245077398319758993976933060005789361782566768518",
+      "max_iterations": 700,
+      "reference_bits": 256,
+      "palette": "electric",
+      "cycles": "1.35",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "38.063688801126397137300614942800593032390672785485285038843712994150399691526679",
+      "max_iterations": 1200,
+      "reference_bits": 384,
+      "palette": "ember",
+      "cycles": "1.7",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "41.563688801126397137300614942800593032390672785485285038843712994150399691526679",
+      "max_iterations": 1200,
+      "reference_bits": 384,
+      "palette": "ember",
+      "cycles": "1.7",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "53.334065550795109925154495617769387667287235706145816250769467099491384328610871",
+      "max_iterations": 1600,
+      "reference_bits": 448,
+      "palette": "ember",
+      "cycles": "2.2",
+      "palette_transition": "blend"
+    },
+    {
+      "time_seconds": "56.334065550795109925154495617769387667287235706145816250769467099491384328610871",
+      "max_iterations": 1600,
+      "reference_bits": 448,
+      "palette": "ember",
+      "cycles": "2.2",
+      "palette_transition": "cut"
+    },
+    {
+      "time_seconds": "69.049962631076923950542622809670646299109272457838011773526745795671819091864501",
+      "max_iterations": 2200,
+      "reference_bits": 512,
+      "palette": "inferno",
+      "cycles": "2.8",
+      "palette_transition": "blend"
+    }
+  ]
+}
