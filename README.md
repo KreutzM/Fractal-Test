@@ -263,7 +263,7 @@ ffmpeg -framerate 30 -i rendered_frames/frame_%05d.png \
   -c:v libx264 -pix_fmt yuv420p fractal-flight.mp4
 ```
 
-## GPU-Diagnose
+## GPU-Diagnose und Health-Check
 
 ```powershell
 .\.venv\Scripts\python.exe -m fractal_flight_studio.doctor
@@ -275,7 +275,17 @@ Oder nach Installation des Kommandozeileneinstiegs:
 fractal-doctor
 ```
 
-Bei erfolgreicher Erkennung nennt die Ausgabe die NVIDIA-GPU und CUDA ist in der App als `cuda-numba` sichtbar. Die Schaltfläche **GPU-Diagnose** zeigt dieselben Daten. Im Modus `auto` wird CUDA bevorzugt; ein CPU-Fallback wird mit Fehlergrund im Status angezeigt.
+Der Doctor prüft die komplette Installation: Python-Version (3.11–3.13), die
+Kernpakete NumPy, Numba, Pillow und mpmath, einen echten CPU-Testframe,
+Tkinter für die Desktop-GUI sowie die optionalen Fähigkeiten FFmpeg
+(MP4-Export, geprüft durch einen echten `ffmpeg -version`-Lauf, nicht nur
+PATH-Suche) und CUDA. Optionale fehlende Fähigkeiten werden als
+`WARNUNG` ausgewiesen und beenden den Check mit Exit 0 — eine gesunde
+CPU-only-Installation gilt als korrekt. Exit ungleich 0 gibt es nur bei
+tatsächlichen Kernfehlern. Mit `--json` erscheint dieselbe Auskunft als
+stabiles, maschinenlesbares Schema.
+
+Bei erfolgreicher CUDA-Erkennung nennt die Ausgabe die NVIDIA-GPU und CUDA ist in der App als `cuda-numba` sichtbar. Die Schaltfläche **GPU-Diagnose** zeigt dieselben Daten. Im Modus `auto` wird CUDA bevorzugt; ein CPU-Fallback wird mit Fehlergrund im Status angezeigt.
 
 ## Benchmark
 
