@@ -4,6 +4,13 @@
 
 These instructions apply to the entire repository.
 
+Repository and GitHub state are the source of truth for agent work; prior chat or
+session context is not authoritative when it conflicts with current evidence.
+Hermes must also follow the repo-local operating policy in `.hermes.md`. The
+end-to-end issue lifecycle is documented in `docs/AGENT_OPERATING_MODEL.md`, and
+Git transport and publication details are documented in
+`docs/AGENT_GIT_WORKFLOW.md`.
+
 ## Environment
 
 - Primary target: Windows 11 with PowerShell 7.
@@ -50,7 +57,10 @@ xvfb-run -a env PYTHONPATH=src python scripts/gui_smoke.py
 
 ## Development workflow
 
+- Substantive work starts from a GitHub issue and normally produces one dedicated
+  feature branch and one reviewable pull request.
 - Work on a feature branch and open a pull request; do not commit directly to `main`.
+- Do not merge a pull request to `main` without explicit user approval.
 - Keep commits small, focused, and reviewable. Multiple connector-generated commits are acceptable when the PR will be squash-merged.
 - Add or update tests for behavioral and numerical changes.
 - Update `CHANGELOG.md` for user-visible release behavior. Update `README.md` only when user workflows materially change, and update `TEST_REPORT.md` only when validation strategy or durable results change; avoid rewriting large documents mechanically in every PR.
