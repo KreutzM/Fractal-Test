@@ -1,6 +1,9 @@
 # Agent Git workflow
 
-This document defines the least complex safe workflow available when normal Git transport may be unavailable. The mandatory summary is in the repository-root `AGENTS.md`.
+This document defines the least complex safe Git transport and publication
+workflow when normal Git transport may be unavailable. The mandatory summary is
+in the repository-root `AGENTS.md`; `.hermes.md` defines Hermes permissions and
+safety boundaries, while `AGENT_OPERATING_MODEL.md` defines the issue lifecycle.
 
 ## Goals
 
@@ -48,7 +51,7 @@ Use an up-to-date local clone when available:
 git fetch origin --prune
 git switch main
 git pull --ff-only
-git switch -c agent/<description>
+git switch -c agent/<issue-number>-<short-description>
 ```
 
 ### Connector-only path
@@ -56,7 +59,8 @@ git switch -c agent/<description>
 When no usable local transport exists:
 
 1. read repository metadata and identify the current default branch;
-2. create `agent/<description>` directly from the current target branch;
+2. create `agent/<issue-number>-<short-description>` directly from the current
+   target branch;
 3. fetch every existing file that will be updated and record its blob SHA;
 4. create new files directly without inventing a prior SHA;
 5. do not commit directly to `main`.
@@ -114,7 +118,8 @@ Keep documentation proportional:
 git push -u origin HEAD
 ```
 
-Then open a draft pull request through the GitHub connector. This remains the preferred route when available.
+Then open or update the pull request through authenticated `gh` or the GitHub
+connector. This remains the preferred route when available.
 
 ### B. Direct connector file operations
 
@@ -126,7 +131,7 @@ Typical sequence:
 2. fetch existing files and their blob SHAs;
 3. apply `update_file`, `create_file`, or `delete_file` operations;
 4. compare the branch with the target;
-5. open a draft pull request.
+5. open a draft pull request unless the work is complete and locally validated.
 
 Several commits are acceptable for one logical pull request. Do not add an extra blob/tree consolidation step solely to force the branch to one commit.
 
@@ -148,7 +153,7 @@ python scripts\prepare_connector_publish.py `
   --repository KreutzM/fractal-flight-studio `
   --remote-base-commit <current-remote-main-sha> `
   --expected-base-tree <current-remote-main-tree-sha> `
-  --branch agent/<description> `
+  --branch agent/<issue-number>-<short-description> `
   --output-dir .agent-publish
 ```
 
@@ -159,7 +164,7 @@ Required sequence:
 3. create one commit with the current remote target commit as parent;
 4. create the feature branch only after the commit exists;
 5. compare target and feature branch;
-6. open a draft pull request.
+6. open a draft pull request unless the work is complete and locally validated.
 
 Stop at the first blob or tree SHA mismatch. Do not retry by manual copying or re-encoding.
 
@@ -180,7 +185,8 @@ If the target branch moves during a connector-only documentation or small source
 
 ## 6. Pull request and merge
 
-Open a draft pull request unless the user explicitly requests otherwise. State:
+Open a draft pull request for incomplete work. A complete change with the required
+local validation may be opened ready for review. State:
 
 - what changed and why;
 - which publication path was used;
@@ -188,7 +194,7 @@ Open a draft pull request unless the user explicitly requests otherwise. State:
 - checks delegated to CI;
 - remaining hardware or platform validation.
 
-Use squash merge by default for connector-created multi-commit branches unless preserving individual commits has a specific value. Merge only after required checks pass and the user authorizes it.
+Use squash merge by default for connector-created multi-commit branches unless preserving individual commits has a specific value. Never merge to `main` without explicit user authorization, even when required checks pass.
 
 ## Prohibited shortcuts
 
