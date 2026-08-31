@@ -27,6 +27,11 @@ from fractal_flight_studio.offline_render import (
 )
 from fractal_flight_studio.renderers import FrameResult
 from fractal_flight_studio.renderers.cpu import CpuRenderer
+from fractal_flight_studio.temporal_tonemapping import (
+    TemporalToneSettings,
+    ToneStability,
+)
+from fractal_flight_studio.tonemapping import ToneMapState
 
 
 def _path(duration: str = "1") -> CameraPath:
@@ -55,10 +60,12 @@ class _FakeRenderer:
 
     def __init__(self, pattern="gradient"):
         self.calls: list[RenderRequest] = []
+        self.raw_calls: list[tuple] = []
         self.pattern = pattern
 
     def render_frame(self, request, *args, **kwargs):
         self.calls.append(request)
+        self.raw_calls.append((request, args, kwargs))
         if self.pattern == "raise":
             raise RuntimeError("renderer failure")
         y, x = np.indices((request.height, request.width))
@@ -72,7 +79,20 @@ class _FakeRenderer:
         ).astype(np.uint8)
         if self.pattern == "bad-shape":
             rgb = rgb[:, :, :2]
-        return FrameResult(rgb, self.name, 0.001, {"tone_state": None})
+        details: dict = {"tone_state": None}
+        if self.pattern == "tone-state":
+            index = len(self.calls)
+            details = {
+                "tone_state": ToneMapState(
+                    mode="asinh",
+                    scene_key=None,
+                    low=1.0 + index,
+                    high=100.0 + index,
+                    strength=1.0,
+                    gamma=0.75,
+                )
+            }
+        return FrameResult(rgb, self.name, 0.001, details)
 
 
 def _read(path: Path) -> np.ndarray:
@@ -302,6 +322,61 @@ def test_rational_cadence_times_are_exact(tmp_path: Path):
     # appended endpoint frame exists at the exact duration text
     assert plan.endpoint_appended
     assert expected_times[-1] == plan.duration_text
+
+
+def test_temporal_tone_states_are_planned_and_locked(tmp_path: Path):
+    plan = _plan()
+    renderer = _FakeRenderer("tone-state")
+    analysis_events = []
+    result = export_frame_sequence(
+        _path(),
+        _request(),
+        renderer,
+        plan,
+        tmp_path,
+        temporal_tone=TemporalToneSettings(
+            mode=ToneStability.TEMPORAL, analysis_width=8, analysis_height=6
+        ),
+        tone_analysis_progress=lambda progress: analysis_events.append(progress),
+    )
+    assert result.rendered_indices == (0, 1, 2)
+    # analysis covered every planned frame before the full-resolution pass
+    assert [e.frames_analyzed for e in analysis_events] == [1, 2, 3]
+    # 3 low-res analysis calls + 3 full-res publication calls
+    assert len(renderer.calls) == 6
+    assert [c.width for c in renderer.calls[:3]] == [8, 8, 8]
+    assert [c.width for c in renderer.calls[3:]] == [6, 6, 6]
+    # the final pass receives smoothed, locked tone states (not the raw ramp)
+    tone_kwargs = _tone_kwargs(renderer)
+    final_states = [kwargs["tone_state"] for kwargs in tone_kwargs[3:]]
+    assert all(state is not None and state.mode == "asinh" for state in final_states)
+    locked = [kwargs["tone_state_locked"] for kwargs in tone_kwargs]
+    assert locked[3:] == [True, True, True]
+    smoothed = [state.low for state in final_states]
+    assert smoothed[1] < smoothed[2]  # temporal ordering preserved
+    assert smoothed != [1.0, 2.0, 3.0]  # actual smoothing, not the raw ramp
+
+
+def test_temporal_tone_rejects_non_zero_start(tmp_path: Path):
+    with pytest.raises(ValueError, match="index 0"):
+        export_frame_sequence(
+            _path(),
+            _request(),
+            _FakeRenderer("tone-state"),
+            _plan(),
+            tmp_path,
+            start_index=1,
+            temporal_tone=TemporalToneSettings(
+                mode=ToneStability.TEMPORAL, analysis_width=8, analysis_height=6
+            ),
+        )
+    assert list(tmp_path.iterdir()) == []
+
+
+def _tone_kwargs(renderer):
+    # render_frame(self, request, *args, **kwargs): offline_render passes the
+    # tone arguments as keywords.
+    return [kwargs for _request_, _args, kwargs in renderer.raw_calls]
 
 
 def test_inputs_are_not_mutated(tmp_path: Path):

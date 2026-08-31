@@ -277,6 +277,10 @@ fractal-render export-frames \
 
 - `--start` / `--stop` wählen eine exakte Frame-Teilmenge (`--stop` ist
   exklusiv); das ist der Weg, große Render in Chunks aufzuteilen.
+- `--filename-pattern` benennt die Frames um (Standard
+  `frame_{index:05d}.png`); erlaubt ist genau ein `{index}`-Feld ohne
+  Pfadtrenner. `--tone-stability per-frame|temporal` wählt die
+  Tonwert-Stabilität; der temporal stabilisierte Vorlauf beginnt bei Frame 0.
 - Erneuter Aufruf mit demselben Ausgabeverzeichnis setzt fort: fertige Frames
   werden geprüft und übersprungen; `--overwrite` rendert sie bewusst neu.
 - Jeder Frame wird atomisch veröffentlicht (Temporärdatei plus Replace) und

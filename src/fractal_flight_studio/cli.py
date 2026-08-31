@@ -10,7 +10,11 @@ import mpmath as mp
 from .animation import FlightPath
 from .deep_zoom import digits_for_bits
 from .export_controller import parse_frame_rate
-from .frame_sequence_export import FrameSequenceSettings, export_frame_sequence
+from .frame_sequence_export import (
+    FrameSequenceError,
+    FrameSequenceSettings,
+    export_frame_sequence,
+)
 from .flight_plan_io import load_flight_plan
 from .models import FractalKind, Precision, RenderMode, RenderRequest, Viewport
 from .offline_render import OfflineRenderSettings, build_offline_frame_plan
@@ -188,23 +192,29 @@ def main(argv: list[str] | None = None) -> int:
                 append_endpoint=True,
             ),
         )
-        result = export_frame_sequence(
-            plan_source,
-            request,
-            renderer,
-            offline_plan,
-            args.output_dir,
-            FrameSequenceSettings(overwrite=args.overwrite),
-            start_index=args.start,
-            stop_index=args.stop,
-            palette=args.palette,
-            cycles=args.cycles,
-            phase=args.phase,
-            tone_mapping=args.tone_mapping,
-            temporal_tone=TemporalToneSettings(
-                mode=ToneStability(args.tone_stability)
-            ),
-        )
+        try:
+            result = export_frame_sequence(
+                plan_source,
+                request,
+                renderer,
+                offline_plan,
+                args.output_dir,
+                FrameSequenceSettings(
+                    filename_pattern=args.filename_pattern,
+                    overwrite=args.overwrite,
+                ),
+                start_index=args.start,
+                stop_index=args.stop,
+                palette=args.palette,
+                cycles=args.cycles,
+                phase=args.phase,
+                tone_mapping=args.tone_mapping,
+                temporal_tone=TemporalToneSettings(
+                    mode=ToneStability(args.tone_stability)
+                ),
+            )
+        except (FrameSequenceError, ValueError) as exc:
+            raise SystemExit(f"export-frames: {exc}") from exc
         print(
             f"frames {result.start_index}-{result.stop_index} of "
             f"{offline_plan.frame_count} in {result.output_dir}: "

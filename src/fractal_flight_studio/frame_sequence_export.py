@@ -74,10 +74,8 @@ class FrameSequenceSettings:
 def _validate_filename_pattern(pattern: str, image_format: str) -> None:
     if not pattern or pattern != pattern.strip():
         raise ValueError("frame-sequence filename pattern must not be empty")
-    separators = [os.sep, "/", "\\"]
-    if os.altsep:
-        separators.append(os.altsep)
-    if any(separator in pattern for separator in separators):
+    separators = [os.sep, os.altsep, "\\", "/"]
+    if any(separator in pattern for separator in separators if separator):
         raise ValueError(
             "frame-sequence filename pattern must be a bare filename without "
             "directory separators"

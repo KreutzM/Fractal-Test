@@ -108,3 +108,50 @@ def test_cli_export_frames_resumes(tmp_path: Path):
     with Image.open(tmp_path / "frame_00000.png") as image:
         assert image.size == (16, 12)
         assert image.mode == "RGB"
+
+
+def test_cli_export_frames_pattern_and_overwrite(tmp_path: Path):
+    plan_path = (
+        REPO_ROOT
+        / "examples"
+        / "flight_plans"
+        / "twin-spiral-nocturne.fractal-flight.json"
+    )
+    command = [
+        sys.executable,
+        "-m",
+        "fractal_flight_studio.cli",
+        "export-frames",
+        "--plan",
+        str(plan_path),
+        "--output-dir",
+        str(tmp_path),
+        "--backend",
+        "cpu",
+        "--width",
+        "16",
+        "--height",
+        "12",
+        "--iterations",
+        "24",
+        "--fps",
+        "2",
+        "--stop",
+        "2",
+        "--filename-pattern",
+        "shot-{index:02d}.png",
+    ]
+    first = subprocess.run(command, check=True, text=True, capture_output=True)
+    assert "2 rendered, 0 skipped" in first.stdout
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["shot-00.png", "shot-01.png"]
+    # resume keeps the custom names; a corrupt existing frame is reported
+    (tmp_path / "shot-00.png").write_bytes(b"corrupt")
+    corrupt = subprocess.run(command, capture_output=True, text=True)
+    assert corrupt.returncode != 0
+    assert "shot-00.png" in corrupt.stderr
+    forced = subprocess.run(
+        [*command, "--overwrite"], check=True, text=True, capture_output=True
+    )
+    assert "2 rendered, 0 skipped" in forced.stdout
+    with Image.open(tmp_path / "shot-00.png") as image:
+        assert image.size == (16, 12)
