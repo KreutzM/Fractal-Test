@@ -9,8 +9,23 @@ import mpmath as mp
 
 from .animation import FlightPath
 from .deep_zoom import digits_for_bits
+from .export_controller import parse_frame_rate
+from .ffmpeg_mp4 import Mp4ExportCancelled
+from .frame_sequence_export import (
+    FrameSequenceError,
+    FrameSequenceSettings,
+    export_frame_sequence,
+)
+from .flight_plan_io import load_flight_plan
 from .models import FractalKind, Precision, RenderMode, RenderRequest, Viewport
+from .offline_render import (
+    OfflineFrameRenderError,
+    OfflineRenderSettings,
+    build_offline_frame_plan,
+)
 from .palettes import palette_names
+from .renderers import select_renderer
+from .temporal_tonemapping import TemporalToneSettings, ToneStability
 from .tonemapping import tone_mapping_names
 from .service import save_png
 
@@ -79,6 +94,38 @@ def build_parser() -> argparse.ArgumentParser:
     flight.add_argument("--frames", type=int, default=120)
     flight.add_argument("--output-dir", type=Path, required=True)
 
+    export_frames = subparsers.add_parser(
+        "export-frames",
+        help="export a flight plan to a resumable deterministic PNG frame directory",
+    )
+    _common_parser(export_frames)
+    export_frames.add_argument("--plan", type=Path, required=True)
+    export_frames.add_argument("--output-dir", type=Path, required=True)
+    export_frames.add_argument("--fps", type=str, default="30")
+    export_frames.add_argument("--start", type=int, default=0)
+    export_frames.add_argument(
+        "--stop",
+        type=int,
+        default=None,
+        help="exclusive stop frame index (default: the final planned frame)",
+    )
+    export_frames.add_argument(
+        "--overwrite",
+        action="store_true",
+        help="re-render frames that already exist instead of resuming",
+    )
+    export_frames.add_argument(
+        "--filename-pattern",
+        type=str,
+        default="frame_{index:05d}.png",
+    )
+    export_frames.add_argument(
+        "--tone-stability",
+        choices=[x.value for x in ToneStability],
+        default=ToneStability.PER_FRAME.value,
+    )
+    export_frames.set_defaults(width=1280, height=720, iterations=800)
+
     benchmark = subparsers.add_parser("benchmark", help="run a repeatable render benchmark")
     _common_parser(benchmark)
     benchmark.set_defaults(width=1280, height=720, iterations=500)
@@ -134,6 +181,60 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "render":
         result = save_png(request, args.output, args.backend, args.palette, args.cycles, args.phase, args.tone_mapping)
         print(f"saved {args.output} via {result.backend} in {result.elapsed_seconds:.3f}s")
+        return 0
+
+    if args.command == "export-frames":
+        plan_source = load_flight_plan(args.plan)
+        renderer = select_renderer(args.backend)
+        numerator, denominator = parse_frame_rate(args.fps)
+        offline_plan = build_offline_frame_plan(
+            plan_source,
+            OfflineRenderSettings(
+                width=args.width,
+                height=args.height,
+                fps_numerator=numerator,
+                fps_denominator=denominator,
+                append_endpoint=True,
+            ),
+        )
+        try:
+            result = export_frame_sequence(
+                plan_source,
+                request,
+                renderer,
+                offline_plan,
+                args.output_dir,
+                FrameSequenceSettings(
+                    filename_pattern=args.filename_pattern,
+                    overwrite=args.overwrite,
+                ),
+                start_index=args.start,
+                stop_index=args.stop,
+                palette=args.palette,
+                cycles=args.cycles,
+                phase=args.phase,
+                tone_mapping=args.tone_mapping,
+                temporal_tone=TemporalToneSettings(
+                    mode=ToneStability(args.tone_stability)
+                ),
+            )
+        except (
+            FrameSequenceError,
+            OfflineFrameRenderError,
+            Mp4ExportCancelled,
+            ValueError,
+        ) as exc:
+            raise SystemExit(f"export-frames: {exc}") from exc
+        print(
+            f"frames {result.start_index}-{result.stop_index} of "
+            f"{offline_plan.frame_count} in {result.output_dir}: "
+            f"{len(result.rendered_indices)} rendered, "
+            f"{len(result.skipped_indices)} skipped"
+        )
+        if result.cancelled:
+            next_index = result.next_start_index()
+            print(f"cancelled; resume with --start {next_index}")
+            return 1
         return 0
 
     if args.command == "flight":

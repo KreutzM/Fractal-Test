@@ -53,6 +53,15 @@ from .flight_plan_io import (
     suggested_flight_plan_name,
 )
 from .flight_plan_session import FlightPlanSession
+from .frame_sequence_export import (
+    FrameSequenceError,
+    FrameSequencePlan,
+    FrameSequenceProgress,
+    FrameSequenceResult,
+    FrameSequenceSettings,
+    export_frame_sequence,
+    parse_frame_range,
+)
 from .flight_transition import (
     FreeTargetValues,
     TransitionMode,
@@ -125,6 +134,11 @@ __all__ = [
     "FlightPlanFormatError",
     "FlightPlanPlaybackController",
     "FlightPlanSession",
+    "FrameSequenceError",
+    "FrameSequencePlan",
+    "FrameSequenceProgress",
+    "FrameSequenceResult",
+    "FrameSequenceSettings",
     "FreeTargetValues",
     "FlightScene",
     "FLIGHT_PLAN_EXTENSION",
@@ -174,11 +188,13 @@ __all__ = [
     "encode_mp4_frames",
     "end_render_profile",
     "deserialize_flight_plan",
+    "export_frame_sequence",
     "export_path_to_mp4",
     "flight_plan_to_dict",
     "flight_export_fingerprint",
     "iter_offline_frame_jobs",
     "merge_render_cues",
+    "parse_frame_range",
     "parse_frame_rate",
     "plan_transition",
     "probe_ffmpeg",
