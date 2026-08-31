@@ -10,6 +10,7 @@ import mpmath as mp
 from .animation import FlightPath
 from .deep_zoom import digits_for_bits
 from .export_controller import parse_frame_rate
+from .ffmpeg_mp4 import Mp4ExportCancelled
 from .frame_sequence_export import (
     FrameSequenceError,
     FrameSequenceSettings,
@@ -17,7 +18,11 @@ from .frame_sequence_export import (
 )
 from .flight_plan_io import load_flight_plan
 from .models import FractalKind, Precision, RenderMode, RenderRequest, Viewport
-from .offline_render import OfflineRenderSettings, build_offline_frame_plan
+from .offline_render import (
+    OfflineFrameRenderError,
+    OfflineRenderSettings,
+    build_offline_frame_plan,
+)
 from .palettes import palette_names
 from .renderers import select_renderer
 from .temporal_tonemapping import TemporalToneSettings, ToneStability
@@ -213,7 +218,12 @@ def main(argv: list[str] | None = None) -> int:
                     mode=ToneStability(args.tone_stability)
                 ),
             )
-        except (FrameSequenceError, ValueError) as exc:
+        except (
+            FrameSequenceError,
+            OfflineFrameRenderError,
+            Mp4ExportCancelled,
+            ValueError,
+        ) as exc:
             raise SystemExit(f"export-frames: {exc}") from exc
         print(
             f"frames {result.start_index}-{result.stop_index} of "

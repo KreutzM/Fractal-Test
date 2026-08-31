@@ -74,8 +74,8 @@ class FrameSequenceSettings:
 def _validate_filename_pattern(pattern: str, image_format: str) -> None:
     if not pattern or pattern != pattern.strip():
         raise ValueError("frame-sequence filename pattern must not be empty")
-    separators = [os.sep, os.altsep, "\\", "/"]
-    if any(separator in pattern for separator in separators if separator):
+    separators = {os.sep, os.altsep, "/", "\\"} - {None}
+    if any(separator in pattern for separator in separators):
         raise ValueError(
             "frame-sequence filename pattern must be a bare filename without "
             "directory separators"
@@ -224,7 +224,6 @@ def export_frame_sequence(
         output_dir=Path(output_dir).expanduser(),
         settings=settings,
     )
-    sequence_plan.output_dir.mkdir(parents=True, exist_ok=True)
     total = stop - start
 
     lighting = surface_lighting_for(source, surface_lighting)
@@ -290,6 +289,7 @@ def export_frame_sequence(
     cancelled = False
     completed = 0
     started = time.perf_counter()
+    sequence_plan.output_dir.mkdir(parents=True, exist_ok=True)
 
     def report(action: str, index: int, time_text: str) -> None:
         if progress is not None:

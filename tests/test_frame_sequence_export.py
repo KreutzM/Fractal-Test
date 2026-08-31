@@ -358,19 +358,21 @@ def test_temporal_tone_states_are_planned_and_locked(tmp_path: Path):
 
 
 def test_temporal_tone_rejects_non_zero_start(tmp_path: Path):
+    output = tmp_path / "seq"
     with pytest.raises(ValueError, match="index 0"):
         export_frame_sequence(
             _path(),
             _request(),
             _FakeRenderer("tone-state"),
             _plan(),
-            tmp_path,
+            output,
             start_index=1,
             temporal_tone=TemporalToneSettings(
                 mode=ToneStability.TEMPORAL, analysis_width=8, analysis_height=6
             ),
         )
-    assert list(tmp_path.iterdir()) == []
+    # validation failures happen before the output directory is created
+    assert not output.exists()
 
 
 def _tone_kwargs(renderer):
