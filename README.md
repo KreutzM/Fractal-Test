@@ -263,6 +263,29 @@ ffmpeg -framerate 30 -i rendered_frames/frame_%05d.png \
   -c:v libx264 -pix_fmt yuv420p fractal-flight.mp4
 ```
 
+### Resumable Frame-Export aus einem Flugplan
+
+`export-frames` rendert einen gespeicherten Flugplan über denselben
+deterministischen Offline-Frame-Plan wie der MP4-Export in ein PNG-Verzeichnis:
+
+```bash
+fractal-render export-frames \
+  --plan examples/flight_plans/twin-spiral-nocturne.fractal-flight.json \
+  --output-dir rendered_frames \
+  --fps 30 --width 1920 --height 1080 --backend cpu
+```
+
+- `--start` / `--stop` wählen eine exakte Frame-Teilmenge (`--stop` ist
+  exklusiv); das ist der Weg, große Render in Chunks aufzuteilen.
+- Erneuter Aufruf mit demselben Ausgabeverzeichnis setzt fort: fertige Frames
+  werden geprüft und übersprungen; `--overwrite` rendert sie bewusst neu.
+- Jeder Frame wird atomisch veröffentlicht (Temporärdatei plus Replace) und
+  vor der Veröffentlichung validiert; ein unterbrochener Lauf hinterlässt
+  keine scheinbar fertigen beschädigten Frames, und derselbe Befehl setzt
+  beim nächsten Aufruf an der ersten fehlenden Frame fort.
+- Die fertige Sequenz lässt sich wie oben mit FFmpeg kodieren
+  (`frame_%05d.png`).
+
 ## GPU-Diagnose und Health-Check
 
 ```powershell

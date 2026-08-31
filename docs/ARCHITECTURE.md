@@ -116,7 +116,20 @@ The planned states belong to one immutable export session. They are not stored i
 - FFmpeg writes to a unique temporary file in the destination directory. The final `.mp4` path is replaced atomically only after a successful encoder exit.
 - Progress callbacks report completed frames and streamed bytes without moving state into Tk widgets.
 
-This layer does not own camera interpolation, preflight decisions or timeline editing. `mp4_export.py` may request a temporal tone plan before it hands the final RGB stream to the encoder; FFmpeg itself remains unaware of tone state. Hardware encoding, PNG checkpoint sequences and higher-bit-depth video remain later extensions.
+This layer does not own camera interpolation, preflight decisions or timeline editing. `mp4_export.py` may request a temporal tone plan before it hands the final RGB stream to the encoder; FFmpeg itself remains unaware of tone state. Hardware encoding and higher-bit-depth video remain later extensions.
+
+### Resumable frame-sequence export
+
+`frame_sequence_export.py` publishes the frames of an existing offline plan as a directory of deterministic PNG files. It consumes `build_offline_frame_plan` and `render_offline_frames` unchanged and does not own camera interpolation, cadence math, tone planning or FFmpeg.
+
+- frame names come from a validated pattern with exactly one `{index}` placeholder and no directory separators; the default is `frame_{index:05d}.png`.
+- a run covers an inclusive-start, exclusive-stop index range so chunked or resumed exports select exactly the frames they intend to produce.
+- an existing destination frame is verified as a complete RGB image at plan size and skipped unless `overwrite=True`; a corrupt or wrong-sized existing frame fails the run instead of being silently replaced.
+- each rendered frame is re-validated (shape, dtype) and published atomically through a unique temporary file plus `os.replace`, so an interrupted run never leaves a file that looks like a completed frame.
+- cancellation is cooperative between frames and returns a partial result whose `next_start_index()` reports where to resume; failures propagate after cleaning up the temporary file.
+- temporal tone planning is available only for ranges starting at index 0 because the analysis itself covers frames `0..stop`; chunked or resumed runs use per-frame tone stability.
+
+The module is Tk-independent like the rest of the offline pipeline; GUI export integration is a separate follow-up. Hardware-encoding or video-codec concerns remain with the MP4 layer.
 
 ### Preflight and export workflow
 
@@ -178,6 +191,7 @@ Future PRs should follow these boundaries:
 - preflight evaluates a path through `run_path_preflight` and reports diagnostics without retaining frame images;
 - full-resolution work is planned with `build_offline_frame_plan`, evaluated with `iter_offline_frame_jobs` and rendered through the stateless offline-frame API;
 - constant-rate MP4 export uses `build_mp4_export_plan` and `export_path_to_mp4`, consumes completed RGB frames and does not own camera interpolation;
+- frame-sequence publication uses `export_frame_sequence` over an existing offline plan; it owns file naming, atomic publication and resume semantics but not cadence or camera evaluation;
 - temporal tone analysis and zero-phase smoothing belong to `temporal_tonemapping.py`; locked states belong to one export session, not to widgets, FFmpeg or implicit renderer state;
 - persistent projects serialize camera/keyframe text without reducing it to absolute `float` values.
 
@@ -188,6 +202,7 @@ Future PRs should follow these boundaries:
 - offline frame cadence, random-access jobs, RGB ownership and contextual failures use deterministic fake renderers;
 - FFmpeg command construction, process cleanup, error propagation, atomic publication and cancellation use deterministic fake processes;
 - export workflow configuration, fingerprints, two-phase progress and cooperative cancellation are tested without Tk;
+- frame-sequence export is tested for deterministic naming, exact ranges, resume/skip behavior, corrupt-existing-frame rejection, atomic publication cleanup, cancellation, rational cadence and a real CPU render without GPU;
 - temporal tone planning is tested for determinism, missing-state handling, locked CPU/CUDA application and reduced adjacent parameter jumps;
 - renderer precision and CPU/CUDA parity remain covered by numerical tests;
 - the Xvfb smoke test verifies only the assembled GUI wiring;

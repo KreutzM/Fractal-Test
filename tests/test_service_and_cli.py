@@ -59,3 +59,52 @@ def test_cli_render(tmp_path: Path):
     )
     assert output.exists()
     assert "saved" in completed.stdout
+
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def test_cli_export_frames_resumes(tmp_path: Path):
+    plan_path = (
+        REPO_ROOT
+        / "examples"
+        / "flight_plans"
+        / "twin-spiral-nocturne.fractal-flight.json"
+    )
+    base = [
+        sys.executable,
+        "-m",
+        "fractal_flight_studio.cli",
+        "export-frames",
+        "--plan",
+        str(plan_path),
+        "--backend",
+        "cpu",
+        "--width",
+        "16",
+        "--height",
+        "12",
+        "--iterations",
+        "24",
+        "--fps",
+        "2",
+    ]
+    first = subprocess.run(
+        [*base, "--output-dir", str(tmp_path), "--stop", "3"],
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    assert "3 rendered, 0 skipped" in first.stdout
+    second = subprocess.run(
+        [*base, "--output-dir", str(tmp_path), "--stop", "5"],
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    assert "2 rendered, 3 skipped" in second.stdout
+    names = sorted(p.name for p in tmp_path.iterdir())
+    assert names == [f"frame_{i:05d}.png" for i in range(5)]
+    with Image.open(tmp_path / "frame_00000.png") as image:
+        assert image.size == (16, 12)
+        assert image.mode == "RGB"

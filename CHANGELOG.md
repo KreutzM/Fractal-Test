@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Resumable frame-sequence export
+
+- New `fractal-render export-frames` command renders a flight plan into a
+  directory of deterministic PNG frames, reusing the existing offline frame
+  plan, cadence and camera-path contracts without changing rendering semantics.
+- Frame ranges are selectable (`--start` / exclusive `--stop`), and re-running
+  with the same output directory resumes: already-published frames are
+  verified against the plan (RGB mode, plan size) and skipped unless
+  `--overwrite` is given. A corrupt or wrong-sized existing frame stops the
+  run with a clear error instead of being silently replaced.
+- Each frame is validated and published atomically (unique temporary file plus
+  replace), so an interrupted job never leaves a partially written file that
+  looks like a completed frame; cooperative cancellation between frames
+  reports the index to resume from.
+- The Python API is `fractal_flight_studio.export_frame_sequence` with
+  `FrameSequenceSettings` / `FrameSequenceResult`; the CPU path works without
+  CUDA and the high-precision camera text is passed through unchanged. GUI
+  integration is tracked separately.
+
 ### Installation health check
 
 - `fractal-doctor` is now a full installation health check instead of a
